@@ -57,6 +57,99 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   const User = mongoose.model('User', userSchema, 'user'); // Explicitly set collection name
   
   // Sign-In Route
+  /**
+ * @swagger
+ * /signin:
+ *   post:
+ *     summary: User sign-in
+ *     description: Authenticates a user and returns a JWT token along with user details.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 description: The email of the user.
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 description: The password of the user.
+ *     responses:
+ *       200:
+ *         description: Sign-in successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Sign-in successful.
+ *                 token:
+ *                   type: string
+ *                   description: JWT token for authentication.
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                     email:
+ *                       type: string
+ *                     firstlogin:
+ *                       type: boolean
+ *       400:
+ *         description: Missing or invalid email or password
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Email and password are required.
+ *       401:
+ *         description: Invalid credentials
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Invalid credentials.
+ *       404:
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User not found.
+ *                 all:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     description: All user records for debugging purposes.
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Internal server error.
+ */
   app.post('/signin', async (req, res) => {
     const { email, password } = req.body;
     // Validate input
