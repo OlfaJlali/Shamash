@@ -3,12 +3,39 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const financementRoutes = require('./routes/FinancementRoutes');
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
 const app = express();
 const port = process.env.PORT || 3001;
 
 // Middleware
 app.use(express.json());
 app.use('/api', financementRoutes);
+
+const swaggerOptions = {
+    definition: {
+      openapi: '3.0.0',
+      info: {
+        title: 'XpertFactor API',
+        version: '1.0.0',
+        description: 'API documentation',
+      },
+      servers: [
+    { url: 'https://shamash.onrender.com/', description: 'Staging server' },
+    { url: 'http://localhost:3001', description: 'Local server' },
+      
+        
+      ],
+    },
+    apis: ['./routes/*.js'], // Path to the API docs
+  };
+  const swaggerSpec = swaggerJsdoc(swaggerOptions);
+
+// Serve Swagger UI
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+  
 
 // // MongoDB connection
 const mongoURI = "mongodb+srv://samashadmin:samashadmin@shamashit.j9gsp.mongodb.net/XpertFactorDB?retryWrites=true&w=majority&appName=ShamashIT";

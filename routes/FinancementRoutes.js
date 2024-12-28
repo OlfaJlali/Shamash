@@ -3,6 +3,87 @@ const FinancementRequest = require('../models/FinancementRequest'); // Path to y
 const router = express.Router();
 
 // POST: Create a new financement request
+/**
+ * @swagger
+ * /api/financement-request:
+ *   post:
+ *     summary: Create a new financement request
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - userid
+ *               - financement_type
+ *               - document_amount
+ *               - document_date
+ *               - traite_type
+ *             properties:
+ *               userid:
+ *                 type: string
+ *                 description: The ID of the user making the request
+ *               financement_type:
+ *                 type: string
+ *                 description: The type of financement requested
+ *               document_amount:
+ *                 type: number
+ *                 description: The amount on the document
+ *               document_date:
+ *                 type: string
+ *                 format: date
+ *                 description: The date of the document
+ *               traite_type:
+ *                 type: string
+ *                 description: The type of traite
+ *     responses:
+ *       201:
+ *         description: Financement request created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Financement request created successfully.
+ *                 request:
+ *                   type: object
+ *                   properties:
+ *                     userid:
+ *                       type: string
+ *                     financement_type:
+ *                       type: string
+ *                     document_amount:
+ *                       type: number
+ *                     document_date:
+ *                       type: string
+ *                       format: date
+ *                     traite_type:
+ *                       type: string
+ *       400:
+ *         description: Missing or invalid fields in the request body
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: All fields are required.
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Internal server error.
+ */
+
 router.post('/financement-request', async (req, res) => {
   const { userid, financement_type, document_amount, document_date, traite_type } = req.body;
 
