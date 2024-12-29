@@ -6,10 +6,11 @@ const financementRequestSchema = new mongoose.Schema({
     type: String,
     required: true,  // Ensure the user ID is provided
   },
-  financement_type: {
+  type: {
     type: String,
-    required: true,  // Specify the type of financement
+    required: true,  // The traite type (e.g., Traite, Letter, etc.)
   },
+ 
   document_amount: {
     type: String,
     required: true,  // Document amount as a string (you can change to Number if required)
@@ -18,10 +19,11 @@ const financementRequestSchema = new mongoose.Schema({
     type: Date,
     required: true,  // The date the document was created
   },
-  traite_type: {
+  financement_type: {
     type: String,
-    required: true,  // The traite type (e.g., Traite, Letter, etc.)
+    required: true,  // Specify the type of financement
   },
+
 });
 
 // Create the model

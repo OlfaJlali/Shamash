@@ -1,6 +1,7 @@
 const express = require('express');
 const FinancementRequest = require('../models/FinancementRequest'); // Path to your model
 const router = express.Router();
+const authenticate = require('../middleware/authMiddleware');
 
 // POST: Create a new financement request
 /**
@@ -24,9 +25,9 @@ const router = express.Router();
  *               userid:
  *                 type: string
  *                 description: The ID of the user making the request
- *               financement_type:
+*               type:
  *                 type: string
- *                 description: The type of financement requested
+ *                 description: The type of financement
  *               document_amount:
  *                 type: number
  *                 description: The amount on the document
@@ -34,9 +35,10 @@ const router = express.Router();
  *                 type: string
  *                 format: date
  *                 description: The date of the document
- *               traite_type:
+ *               financement_type:
  *                 type: string
- *                 description: The type of traite
+ *                 description: The type of financement requested
+
  *     responses:
  *       201:
  *         description: Financement request created successfully
@@ -84,11 +86,14 @@ const router = express.Router();
  *                   example: Internal server error.
  */
 
-router.post('/financement-request', async (req, res) => {
-  const { userid, financement_type, document_amount, document_date, traite_type } = req.body;
+router.post('/financement-request',authenticate,  async (req, res) => {
+    const userid = req.user.identifier
+    console.log(req.user, 'user')
+    console.log(userid, 'userID')
+  const { type , document_amount, document_date, financement_type } = req.body;
 
   // Validate input
-  if (!userid || !financement_type || !document_amount || !document_date || !traite_type) {
+  if (!type || !document_amount || !document_date || !financement_type) {
     return res.status(400).json({ message: 'All fields are required.' });
   }
 
@@ -96,10 +101,10 @@ router.post('/financement-request', async (req, res) => {
     // Create a new financement request
     const newRequest = new FinancementRequest({
       userid,
-      financement_type,
+      type,
       document_amount,
       document_date,
-      traite_type,
+      financement_type
     });
 
     // Save the request to the database
