@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const financementRoutes = require('./routes/FinancementRoutes');
 const userRoutes = require('./routes/signIn')
+const DashboardRoutes = require('./routes/dashboard')
+
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
@@ -12,6 +14,8 @@ const port = process.env.PORT || 3001;
 app.use(express.json());
 app.use('/api', financementRoutes);
 app.use('/api', userRoutes);
+app.use('/api', DashboardRoutes);
+
 
 
 
