@@ -6,19 +6,19 @@ const Contract = require('../models/contract');
 
 /**
  * @swagger
- * /api/contracts/{userId}:
+ * /api/contracts:
  *   get:
- *     summary: Get all contracts for a user
+ *     summary: Get all contracts for a specific user (via query parameter)
  *     parameters:
- *       - in: path
+ *       - in: query
  *         name: userId
  *         required: true
- *         description: User ID to fetch contracts for.
  *         schema:
  *           type: string
+ *         description: The ID of the user whose contracts you want to retrieve.
  *     responses:
  *       200:
- *         description: List of contracts
+ *         description: A list of contracts for the specified user.
  *         content:
  *           application/json:
  *             schema:
@@ -26,18 +26,28 @@ const Contract = require('../models/contract');
  *               items:
  *                 type: object
  *                 properties:
- *                   contractId:
+ *                   userId:
  *                     type: string
+ *                     description: The ID of the user.
  *                   amount:
- *                     type: number
- *                   currentInvoices:
- *                     type: number
- *                   guaranteeFund:
- *                     type: number
- *                   reserveFund:
- *                     type: number
- *                   overshootingBuyerLimit:
- *                     type: number
+ *                     type: string
+ *                     description: The amount of the contract.
+ *                   totalInvoices:
+ *                     type: string
+ *                     description: Total amount of current invoices.
+ *                   totalGuaranteeFund:
+ *                     type: string
+ *                     description: Total of guarantee fund.
+ *                   totalReserveFund:
+ *                     type: string
+ *                     description: Total of reserve fund.
+ *                   totalOvershooting:
+ *                     type: string
+ *                     description: Total overshooting of buyer financial limit.
+ *       400:
+ *         description: Bad Request. Missing or invalid userId parameter.
+ *       500:
+ *         description: Internal server error.
  */
 router.get('/contracts', async (req, res) => {
     try {
