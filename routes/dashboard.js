@@ -39,9 +39,12 @@ const Contract = require('../models/contract');
  *                   overshootingBuyerLimit:
  *                     type: number
  */
-router.get('/contracts/:userId', async (req, res) => {
+router.get('/contracts', async (req, res) => {
     try {
-      const { userId } = req.params;
+      const { userId } = req.query;
+      if (!userId) {
+        return res.status(400).json({ error: 'identifier is required' });
+      }  
       const contracts = await Contract.find({userId});
       console.log(contracts)
       res.status(200).json(contracts);
