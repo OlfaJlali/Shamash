@@ -342,10 +342,10 @@ router.post('/changepassword',authenticate,  async (req, res) => {
  *                   example: Internal server error.
  */
   router.patch('/edit-profile', authenticate, async (req, res) => {
-    const { phoneNumber } = req.body;
+    const { phoneNumber , email } = req.body;
   
-    if (!phoneNumber) {
-      return res.status(400).json({ message: 'Phone number is required.' });
+    if (!phoneNumber || !email) {
+      return res.status(400).json({ message: 'Phone number and email are required.' });
     }
   
     try {
@@ -358,6 +358,7 @@ router.post('/changepassword',authenticate,  async (req, res) => {
       }
   
       user.phoneNumber = phoneNumber;
+      user.email = email
       await user.save();
   
       res.status(200).json({
