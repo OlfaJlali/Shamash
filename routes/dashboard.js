@@ -49,7 +49,7 @@ const Contract = require('../models/contract');
  *       500:
  *         description: Internal server error.
  */
-router.get('/contracts', async (req, res) => {
+router.get('/contracts', authenticate, async (req, res) => {
     try {
       const { userId } = req.query;
       if (!userId) {
