@@ -4,6 +4,7 @@ const financementRoutes = require('./routes/FinancementRoutes');
 const userRoutes = require('./routes/signIn')
 const DashboardRoutes = require('./routes/dashboard')
 const BuyerRoutes = require('./routes/buyer')
+const DocumentRoutes = require('./routes/document')
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
@@ -16,6 +17,7 @@ app.use('/api', financementRoutes);
 app.use('/api', userRoutes);
 app.use('/api', DashboardRoutes);
 app.use('/api', BuyerRoutes);
+app.use('/api', DocumentRoutes);
 
 
 
@@ -43,7 +45,6 @@ const swaggerOptions = {
 // Serve Swagger UI
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-  
 
 // // MongoDB connection
 const mongoURI = "mongodb+srv://samashadmin:samashadmin@shamashit.j9gsp.mongodb.net/XpertFactorDB?retryWrites=true&w=majority&appName=ShamashIT";
