@@ -5,13 +5,13 @@ const authenticate = require('../middleware/authMiddleware');
 const Document = require('../models/document');
 router.get('/documents', async (req, res) => {
     try {
-        const { identifier, page = 1, limit = 10, search = '' } = req.query; // Added `search` query parameter
+        const { buyerId, page = 1, limit = 10, search = '' } = req.query; // Added `search` query parameter
         const skip = (parseInt(page) - 1) * parseInt(limit);
 
-        if (!identifier) {
+        if (!buyerId) {
             return res.status(400).json({
                 success: false,
-                message: 'Missing required parameter: identifier',
+                message: 'Missing required parameter: buyerId',
             });
         }
 
@@ -23,7 +23,7 @@ router.get('/documents', async (req, res) => {
             : {};
 
         // Combine filters
-        const filters = { userId: identifier, ...searchFilter };
+        const filters = { buyerId, ...searchFilter };
 
         // Fetch paginated documents
         const documents = await document.find(filters)
