@@ -6,7 +6,7 @@ const Buyer = require('../models/buyer');
 
 router.get('/buyers', async (req, res) => {
     try {
-        const { identifer,  page = 1, limit = 10 } = req.query; // Default to page 1, limit 10
+        const { identifer, page = 1, limit = 10, search = '' } = req.query; // Added `search` query parameter
         const skip = (parseInt(page) - 1) * parseInt(limit);
 
         if (!identifer) {
@@ -16,14 +16,24 @@ router.get('/buyers', async (req, res) => {
             });
         }
 
+        // Build search filter
+        const searchFilter = search
+            ? { $or: [
+                { firstname: { $regex: search, $options: 'i' } }, // Case-insensitive match
+                { lastname: { $regex: search, $options: 'i' } },
+              ] }
+            : {};
+
+        // Combine filters
+        const filters = { userId: identifer, ...searchFilter };
 
         // Fetch paginated buyers
-        const buyers = await Buyer.find({userId : identifer})
+        const buyers = await Buyer.find(filters)
             .skip(skip)
             .limit(parseInt(limit));
 
         // Total count of buyers
-        const totalBuyers = await Buyer.countDocuments({ userId: identifer });
+        const totalBuyers = await Buyer.countDocuments(filters);
 
         res.status(200).json({
             success: true,
@@ -40,4 +50,5 @@ router.get('/buyers', async (req, res) => {
         res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
 });
+
 module.exports = router
