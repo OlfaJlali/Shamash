@@ -26,7 +26,7 @@ router.get('/documents', async (req, res) => {
         const filters = { buyerId, ...searchFilter };
 
         // Fetch paginated documents
-        const documents = await document.find(filters)
+        const documents = await Document.find(filters)
             .skip(skip)
             .limit(parseInt(limit));
 
