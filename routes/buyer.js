@@ -6,13 +6,13 @@ const Buyer = require('../models/buyer');
 
 router.get('/buyers', async (req, res) => {
     try {
-        const { identifer, page = 1, limit = 10, search = '' } = req.query; // Added `search` query parameter
+        const { identifier, page = 1, limit = 10, search = '' } = req.query; // Added `search` query parameter
         const skip = (parseInt(page) - 1) * parseInt(limit);
 
-        if (!identifer) {
+        if (!identifier) {
             return res.status(400).json({
                 success: false,
-                message: 'Missing required parameter: identifer',
+                message: 'Missing required parameter: identifier',
             });
         }
 
@@ -25,7 +25,7 @@ router.get('/buyers', async (req, res) => {
             : {};
 
         // Combine filters
-        const filters = { userId: identifer, ...searchFilter };
+        const filters = { userId: identifier, ...searchFilter };
 
         // Fetch paginated buyers
         const buyers = await Buyer.find(filters)
