@@ -6,6 +6,10 @@ const litigeSchema = new mongoose.Schema({
     type: String,
     required: true,  // Ensure the user ID is provided
   },
+  type: {
+    type: String,
+    required:true
+  },
   litigeDate: {
     type: Date,
     required: true,  // The traite type (e.g., Traite, Letter, etc.)

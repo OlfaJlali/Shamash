@@ -4,10 +4,10 @@ const Litige = require('../models/litige'); // Path to your model
 const router = express.Router();
 const authenticate = require('../middleware/authMiddleware');
 router.post('/litige',authenticate,  async (req, res) => {
-  const { documentId,litigeDate,echeanceDate  } = req.body;
+  const { documentId,litigeDate,echeanceDate,type } = req.body;
 
   // Validate input
-  if (!documentId || !litigeDate || !echeanceDate) {
+  if (!documentId ||!type|| !litigeDate || !echeanceDate) {
     return res.status(400).json({ message: 'All fields are required.' });
   }
 
@@ -15,6 +15,7 @@ router.post('/litige',authenticate,  async (req, res) => {
     // Create a new financement request
     const newRequest = new Litige({
         documentId,
+        type,
         litigeDate,
         echeanceDate,
     });
