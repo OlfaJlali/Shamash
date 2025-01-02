@@ -7,7 +7,7 @@ const BuyerRoutes = require('./routes/buyer')
 const DocumentRoutes = require('./routes/document')
 const LitigeRoutes = require('./routes/litige')
 const ProrogationRoutes = require('./routes/prorogation')
-
+const limitRoutes = require('./routes/limit')
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
@@ -23,7 +23,7 @@ app.use('/api', BuyerRoutes);
 app.use('/api', DocumentRoutes);
 app.use('/api', LitigeRoutes);
 app.use('/api', ProrogationRoutes);
-
+app.use('/api', limitRoutes);
 
 
 
