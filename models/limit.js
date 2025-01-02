@@ -7,7 +7,7 @@ const limitSchema = new mongoose.Schema({
     required: true,  // Ensure the user ID is provided
   },
   requestDate: {
-    type: String,
+    type: Date,
     required:true
   },
   assurenceLimit: {
