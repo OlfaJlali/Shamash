@@ -17,11 +17,11 @@ router.get('/documents', async (req, res) => {
 
         // Build search filter
         const searchFilter = search
-            ? { $or: [
-                { number: { $regex: search, $options: 'i' } }, // Case-insensitive match
-              ] }
-            : {};
-
+        ? { $or: [
+            { number: !isNaN(search) ? Number(search) : undefined }, // Convert to number if valid
+          ].filter(Boolean) }                                       // Remove invalid entries
+        : {};
+      
         // Combine filters
         const filters = { buyerId, ...searchFilter };
 
