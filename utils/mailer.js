@@ -10,6 +10,7 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASSWORD,
   },
 });
+// jwos joat zyly kixm
 
 const sendOTP = async (to, otp) => {
   const mailOptions = {

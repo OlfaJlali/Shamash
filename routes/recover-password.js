@@ -18,7 +18,8 @@ router.post('/recover-password', async (req, res) => {
       }
   
       // Generate a 6-digit OTP
-      const otp = Math.floor(100000 + Math.random() * 900000);
+      const otp = Math.floor(1000 + Math.random() * 9000); // Generates a 4-digit OTP
+
   
       // Save OTP to the user's record (hashed for security)
       user.resetPasswordToken = otp; // Consider hashing it in production
