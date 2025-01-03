@@ -30,7 +30,7 @@ router.post('/verify-otp', async (req, res) => {
     //   }
   
       // OTP is valid, allow the user to reset their password
-      res.status(200).json({ message: 'OTP is valid, you can now reset your password' });
+      res.status(200).json({ message: 'OTP is valid' });
   
       // You can also create a link to a password reset form, or handle the reset process here.
       // Example: sending a token for password reset
