@@ -18,7 +18,7 @@ router.post('/create-password',  async (req, res) => {
       // Update the user's password
       user.password = hashedPassword;
       await user.save();
-        res.status(200).json({ message: 'Password changed successfully.' });
+        res.status(200).json({ message: 'Password changed successfully' });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Internal server error.' });
