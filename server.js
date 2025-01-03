@@ -9,6 +9,7 @@ const LitigeRoutes = require('./routes/litige')
 const ProrogationRoutes = require('./routes/prorogation')
 const limitRoutes = require('./routes/limit')
 const recoverPassword = require('./routes/recover-password')
+const createPassword = require('./routes/createnewpass')
 const verifyOtp = require('./routes/verifyotp')
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
@@ -28,6 +29,8 @@ app.use('/api', ProrogationRoutes);
 app.use('/api', limitRoutes);
 app.use('/api', recoverPassword);
 app.use('/api', verifyOtp);
+app.use('/api', createPassword);
+
 
 
 
