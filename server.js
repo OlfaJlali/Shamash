@@ -8,6 +8,7 @@ const DocumentRoutes = require('./routes/document')
 const LitigeRoutes = require('./routes/litige')
 const ProrogationRoutes = require('./routes/prorogation')
 const limitRoutes = require('./routes/limit')
+const recoverPassword = require('./routes/recover-password')
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
@@ -24,6 +25,7 @@ app.use('/api', DocumentRoutes);
 app.use('/api', LitigeRoutes);
 app.use('/api', ProrogationRoutes);
 app.use('/api', limitRoutes);
+app.use('/api', recoverPassword);
 
 
 
