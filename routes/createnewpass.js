@@ -1,6 +1,8 @@
 const User = require("../models/user");
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcrypt');
+
 router.post('/create-password',  async (req, res) => {
     const {  email, newPassword } = req.body;
   
