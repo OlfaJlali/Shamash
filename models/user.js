@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
     firstlogin: { type: Boolean, default: true },
     name: { type: String, required: true },
     phoneNumber: { type: String, required: true },
+    resetPasswordToken: {type: Number, required:false}
   });
   const User = mongoose.model('User', userSchema, 'user'); // Explicitly set collection name
   module.exports = User;

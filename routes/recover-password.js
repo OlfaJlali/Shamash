@@ -25,6 +25,7 @@ router.post('/recover-password', async (req, res) => {
       user.resetPasswordToken = otp; // Consider hashing it in production
       user.resetPasswordExpires = Date.now() + 10 * 60 * 1000; // Expires in 10 minutes
       await user.save();
+      console.log(otp)
   
       // Send the OTP to the user's email
       await sendOTP(email, otp);
