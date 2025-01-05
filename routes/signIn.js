@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
  const mongoose = require('mongoose');
  const router = express.Router();
  const multer = require('multer');
+ const fs = require('fs');
 
  const authenticate = require('../middleware/authMiddleware');
 const User = require('../models/user');
@@ -366,26 +367,8 @@ router.post('/changepassword',authenticate,  async (req, res) => {
     }
   });
 
-  const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, 'uploads/'); // Specify the folder for uploads
-    },
-    filename: (req, file, cb) => {
-      cb(null, `${Date.now()}-${file.originalname}`);
-    },
-  });
   
-  const upload = multer({ 
-    storage,
-    fileFilter: (req, file, cb) => {
-      // Allow only image files
-      if (!file.mimetype.startsWith('image/')) {
-        return cb(new Error('Only image files are allowed'), false);
-      }
-      cb(null, true);
-    },
-  });
-  
+    
 
 // Endpoint to update profile picture
 router.post('/update-profile-picture', upload.single('profilePicture'), async (req, res) => {
