@@ -131,7 +131,9 @@ const User = require('../models/user');
         phoneNumber: user.phoneNumber
         // Add any other fields you want to send back
       };
-  
+      console.log(userData ,'userData');
+      console.log(user ,'user')
+
       // Respond with the token and user data
       res.status(200).json({ message: 'Sign-in successful.', token, user: userData });
   
