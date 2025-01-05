@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
  const mongoose = require('mongoose');
  const router = express.Router();
  const multer = require('multer');
- const fs = require('fs');
 
  const authenticate = require('../middleware/authMiddleware');
 const User = require('../models/user');
@@ -130,7 +129,8 @@ const User = require('../models/user');
         email: user.email,
         firstlogin: user.firstlogin,
         name: user.name,
-        phoneNumber: user.phoneNumber
+        phoneNumber: user.phoneNumber,
+        profilePicture: user.profilePicture
         // Add any other fields you want to send back
       };
       console.log(userData ,'userData');
@@ -368,11 +368,6 @@ router.post('/changepassword',authenticate,  async (req, res) => {
   });
 
   
-  const uploadDir = path.join(__dirname, 'uploads');
-  
-  if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir);
-  }
   
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {

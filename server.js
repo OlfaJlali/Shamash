@@ -15,9 +15,17 @@ const verifyOtp = require('./routes/verifyotp')
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
 const port = process.env.PORT || 3001;
+
+const uploadDir = path.join(__dirname, 'uploads');
+  
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
+
 
 // Middleware
 app.use(express.json());
