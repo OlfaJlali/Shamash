@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
  const mongoose = require('mongoose');
  const router = express.Router();
+ const multer = require('multer');
 
  const authenticate = require('../middleware/authMiddleware');
 const User = require('../models/user');
@@ -364,6 +365,63 @@ router.post('/changepassword',authenticate,  async (req, res) => {
       res.status(500).json({ message: 'Internal server error.' });
     }
   });
+
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'uploads/'); // Specify the folder for uploads
+    },
+    filename: (req, file, cb) => {
+      cb(null, `${Date.now()}-${file.originalname}`);
+    },
+  });
+  
+  const upload = multer({ 
+    storage,
+    fileFilter: (req, file, cb) => {
+      // Allow only image files
+      if (!file.mimetype.startsWith('image/')) {
+        return cb(new Error('Only image files are allowed'), false);
+      }
+      cb(null, true);
+    },
+  });
+  
+
+// Endpoint to update profile picture
+router.post('/update-profile-picture', upload.single('profilePicture'), async (req, res) => {
+  const { identifier } = req.body;
+
+  if (!identifier) {
+    return res.status(400).json({ message: 'identifier is required' });
+  }
+
+  if (!req.file) {
+    return res.status(400).json({ message: 'Profile picture is required' });
+  }
+
+  try {
+    const user = await User.findOne({ identifier });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Update the user's profile picture URL
+    user.profilePicture = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+    await user.save();
+
+    res.status(200).json({
+      message: 'Profile picture updated successfully',
+      profilePicture: user.profilePicture,
+    });
+  } catch (error) {
+    console.error('Error updating profile picture:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+module.exports = router;
+
   
   
   module.exports = router;

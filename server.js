@@ -13,6 +13,7 @@ const createPassword = require('./routes/createnewpass')
 const verifyOtp = require('./routes/verifyotp')
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -30,7 +31,7 @@ app.use('/api', limitRoutes);
 app.use('/api', recoverPassword);
 app.use('/api', verifyOtp);
 app.use('/api', createPassword);
-
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 
