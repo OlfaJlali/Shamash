@@ -12,6 +12,7 @@ const limitRoutes = require('./routes/limit')
 const recoverPassword = require('./routes/recover-password')
 const createPassword = require('./routes/createnewpass')
 const verifyOtp = require('./routes/verifyotp')
+const addBordereau = require('./routes/bordereau')
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const path = require('path');
@@ -40,6 +41,8 @@ app.use('/api', limitRoutes);
 app.use('/api', recoverPassword);
 app.use('/api', verifyOtp);
 app.use('/api', createPassword);
+app.use('/api', addBordereau);
+
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(cors());
 
