@@ -409,7 +409,7 @@ router.post('/update-profile-picture', upload.single('profilePicture'), async (r
     }
 
     // Update the user's profile picture URL
-    user.profilePicture = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+    user.profilePicture = `https://${req.get('host')}/uploads/${req.file.filename}`;
     await user.save();
 
     res.status(200).json({
