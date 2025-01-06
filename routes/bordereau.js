@@ -31,6 +31,7 @@ const storage = multer.diskStorage({
       if (typeof req.body.docs === 'string') {
         parsedDocs = JSON.parse(req.body.docs);
       } else {
+        parsedDocs = req.body.docs;
       }
   
       if (!parsedDocs || !parsedDocs.length) {
@@ -39,7 +40,6 @@ const storage = multer.diskStorage({
   
       // Map documents and link to uploaded files
       const documentsWithImages = parsedDocs.map((doc, index) => {
-        console.log(doc,'doc')
         const matchingFile = req.files.find(
           (file) => file.fieldname === `docs[${index}][scannedImage]`
         );
